@@ -14,7 +14,7 @@
   },
   "events": [
     {
-      "name": "contract_content_changed"
+      "name": "contract_published"
     }
   ]
 }
