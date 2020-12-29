@@ -1,7 +1,10 @@
-FROM jenkins/jenkins:2.242
+FROM jenkins/jenkins:2.271
+
+ENV JENKINS_UC_DOWNLOAD="http://mirrors.jenkins-ci.org"
 
 # Install required plugins
-RUN /usr/local/bin/install-plugins.sh git:3.12.1 blueocean:1.8.4 job-dsl:1.70 workflow-aggregator:2.6
+RUN jenkins-plugin-cli -p git:4.5.1 blueocean:1.8.4 job-dsl:1.70 workflow-aggregator:2.6
 
 # Skip initial setup
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+
