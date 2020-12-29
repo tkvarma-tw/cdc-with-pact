@@ -1,4 +1,4 @@
-def gitUrl = 'https://github.com/tinexw/cdc-with-pact'
+def gitUrl = 'https://github.com/tkvarma-tw/cdc-with-pact'
 
 // Main build and deploy job for consumer and provider each (continuous deployment case)
 ['messaging-app', 'user-service'].each {
