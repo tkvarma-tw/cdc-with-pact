@@ -24,6 +24,7 @@ services:
       PACT_BROKER_DATABASE_HOST: postgres
       PACT_BROKER_DATABASE_NAME: postgres
       PACT_BROKER_WEBHOOK_SCHEME_WHITELIST: http https
+      PACT_BROKER_WEBHOOK_HOST_WHITELIST: jenkins
       PACT_BROKER_LOG_LEVEL: DEBUG
   jenkins:
     build:
