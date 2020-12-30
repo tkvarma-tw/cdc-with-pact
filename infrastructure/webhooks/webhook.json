@@ -7,9 +7,10 @@
   },
   "request": {
     "method": "POST",
-    "url": "http://jenkins:8080/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
+    "url": "https://04567f2cc4ea.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
     "headers": {
-      "Accept": "application/json"
+      "Accept": "application/json",
+      "Jenkins-Crumb":"e108a4590f093d273d5e7129b0269d40b4e9342ec080b1d8ccaac3f66cb26f2a"
     }
   },
   "events": [
