@@ -18,29 +18,29 @@ pipeline {
 //      }
 //    }
 //
-//    stage("Get Jenkins crumb from curl command") {
-//      steps {
-//        script {
-//          final String url = "http://034741e6f9ab.ngrok.io/crumbIssuer/api/json"
-//
-//          final def (String response, int code) =
-//          sh(script: "curl -s -w '\\n%{response_code}' $url", returnStdout: true)
-//                  .trim()
-//                  .tokenize("\n")
-//
-//          echo "HTTP response status code: $code"
-//
-//          if (code == 200) {
-//            echo "HTTP response: $response"
-//            def json = new JsonSlurperClassic().parseText(response)
-//            echo "JSON Object: $json"
-//            def crumb = json.crumb
-//            echo "Jenkins_Crumb = $crumb"
-//            env.JENKINS_CRUMB = crumb
-//          }
-//        }
-//      }
-//    }
+    stage("Get Jenkins crumb from curl command") {
+      steps {
+        script {
+          final String url = "http://034741e6f9ab.ngrok.io/crumbIssuer/api/json"
+
+          final def (String response, int code) =
+          sh(script: "curl -s -w '\\n%{response_code}' $url", returnStdout: true)
+                  .trim()
+                  .tokenize("\n")
+
+          echo "HTTP response status code: $code"
+
+          if (code == 200) {
+            echo "HTTP response: $response"
+            def json = new JsonSlurperClassic().parseText(response)
+            echo "JSON Object: $json"
+            def crumb = json.crumb
+            echo "Jenkins_Crumb = $crumb"
+            env.JENKINS_CRUMB = crumb
+          }
+        }
+      }
+    }
 
     stage("Check if webhook already exists") {
       steps {
@@ -50,6 +50,7 @@ pipeline {
           echo "Response: $RESPONSE"
           def json = new JsonSlurperClassic().parseText(RESPONSE)
           echo "JSON Object: $json"
+          env.CREATE_WEBHOOK = "false"
           try{
             def href = json['_links']['pb:webhooks'][0].href
           }catch(NullPointerException e){
