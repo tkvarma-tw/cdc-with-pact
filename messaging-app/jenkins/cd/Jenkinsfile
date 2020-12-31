@@ -39,6 +39,7 @@ pipeline {
           if (code == 200) {
             echo "HTTP response: $response"
             def json = new JsonSlurperClassic().parseText(response)
+            echo json.properties.entrySet().toArray()
             def crumb = json.actions.find { it._class == "org.jenkinsci.plugins.strictcrumbissuer.StrictCrumbIssuer" }.properties
             echo "Jenkins_Crumb = $crumb"
           }
