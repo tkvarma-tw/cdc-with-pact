@@ -47,8 +47,11 @@ pipeline {
         script {
           final String url = "http://pact_broker/pacts/provider/user-service/consumer/messaging-app/webhooks"
           env.RESPONSE = sh(script: "curl -XGET $url", returnStdout: true).trim()
-
           echo "Response: $RESPONSE"
+          def json = new JsonSlurperClassic().parseText($RESPONSE)
+          echo "JSON Object: $json"
+          def crumb = json['_links']['pb:webhooks'][0].href
+          echo "webhook link = $crumb"
         }
       }
     }
