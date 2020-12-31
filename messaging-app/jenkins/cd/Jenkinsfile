@@ -48,7 +48,7 @@ pipeline {
           final String url = "http://pact_broker/pacts/provider/user-service/consumer/messaging-app/webhooks"
 
           final def (String response, int code) =
-          sh(script: "curl -XGET -H \"Content-type: application/json\" $url", returnStdout: true)
+          sh(script: "curl -XGET -H 'Content-type: application/json' $url", returnStdout: true)
                   .trim()
                   .tokenize("\n")
 
