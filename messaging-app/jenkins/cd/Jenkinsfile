@@ -42,6 +42,30 @@ pipeline {
       }
     }
 
+//    stage("Check if webhook already exists") {
+//      steps {
+//        script {
+//          final String url = "http://pact_broker/pacts/provider/user-service/consumer/messaging-app/webhooks"
+//
+//          final def (String response, int code) =
+//          sh(script: "curl -XGET -H \"Content-type: application/json\" $url", returnStdout: true)
+//                  .trim()
+//                  .tokenize("\n")
+//
+//          echo "HTTP response status code: $code"
+//
+//          if (code == 200) {
+//            echo "HTTP response: $response"
+//            def json = new JsonSlurperClassic().parseText(response)
+//            echo "JSON Object: $json"
+//            def crumb = json.collect()
+//            echo "Jenkins_Crumb = $crumb"
+//            env.JENKINS_CRUMB = crumb
+//          }
+//        }
+//      }
+//    }
+
     stage('Publish Pacts') {
       steps {
         dir('messaging-app') {
