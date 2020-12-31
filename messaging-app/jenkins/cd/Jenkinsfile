@@ -24,39 +24,39 @@ pipeline {
         }
       }
     }
-//    stage("Get Jenkins crumb from curl command") {
-//      steps {
-//        script {
-//          final String url = "http://17115c52f9f4.ngrok.io/crumbIssuer/api/json"
-//
-//          final def (String response, int code) =
-//          sh(script: "curl -s -w '\\n%{response_code}' $url", returnStdout: true)
-//                  .trim()
-//                  .tokenize("\n")
-//
-//          echo "HTTP response status code: $code"
-//
-//          if (code == 200) {
-//            echo "HTTP response: $response"
-//            def json = new JsonSlurperClassic().parseText(response)
-//            echo "JSON Object: $json"
-//            def crumb = json.crumb
-//            echo "Jenkins_Crumb = $crumb"
-//            env.Jenkins_Crumb = $crumb
-//          }
-//        }
-//      }
-//    }
+    stage("Get Jenkins crumb from curl command") {
+      steps {
+        script {
+          final String url = "http://034741e6f9ab.ngrok.io/crumbIssuer/api/json"
 
-//    stage('Create a webhook and add the Jenkins Crumb in the webhook') {
-//      steps {
-//        sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.61.1/pact-1.61.1-linux-x86_64.tar.gz'
-//        sh 'tar xzf pact-1.61.1-linux-x86_64.tar.gz'
-//        dir('pact/bin') {
-//          sh "./pact-broker create-webhook 'http://034741e6f9ab.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=master' --request=POST --header='Content-Type: application/json' --data='{"foo": "bar"}' --broker-base-url='http://localhost' --consumer=messaging-app --provider=user-service --contract_content_changed --verbose"
-//        }
-//      }
-//    }
+          final def (String response, int code) =
+          sh(script: "curl -s -w '\\n%{response_code}' $url", returnStdout: true)
+                  .trim()
+                  .tokenize("\n")
+
+          echo "HTTP response status code: $code"
+
+          if (code == 200) {
+            echo "HTTP response: $response"
+            def json = new JsonSlurperClassic().parseText(response)
+            echo "JSON Object: $json"
+            def crumb = json.crumb
+            echo "Jenkins_Crumb = $crumb"
+            env.JENKINS_CRUMB = $crumb
+          }
+        }
+      }
+    }
+
+    stage('Create a webhook and add the Jenkins Crumb in the webhook') {
+      steps {
+        sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.61.1/pact-1.61.1-linux-x86_64.tar.gz'
+        sh 'tar xzf pact-1.61.1-linux-x86_64.tar.gz'
+        dir('pact/bin') {
+          sh "./pact-broker create-webhook 'http://034741e6f9ab.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=master' --request=POST --header='Accept: application/json' 'Jenkins-Crumb:${JENKINS_CRUMB}' --broker-base-url='http://pact_broker' --consumer=messaging-app --provider=user-service --contract_content_changed --verbose"
+        }
+      }
+    }
 
 //      stage('Check Pact Verifications') {
 //        steps {
