@@ -35,8 +35,8 @@ pipeline {
           echo "HTTP response status code: $code"
 
           if (code == 200) {
-            def crumb = sh(script: "echo '$response' | jq -r '.actions[] | select(._class == \"org.jenkinsci.plugins.strictcrumbissuer.StrictCrumbIssuer\") | .crumb'", returnStdout: true).trim()
-
+            def json = new groovy.json.JsonSlurperClassic().parseText(response)
+            def crumb = json.actions.find { it._class == "org.jenkinsci.plugins.strictcrumbissuer.StrictCrumbIssuer" }.crumb
             echo "Jenkins_Crumb = $crumb"
           }
         }
