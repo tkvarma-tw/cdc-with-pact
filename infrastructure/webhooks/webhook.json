@@ -7,10 +7,10 @@
   },
   "request": {
     "method": "POST",
-    "url": "http://118d6f57704c.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
+    "url": "http://17115c52f9f4.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
     "headers": {
       "Accept": "application/json",
-      "Jenkins-Crumb":"ec92c7d5afa2ac6cd4f9d884d0a8503d75962e30352ebd2112d4ad1bb5981dcb"
+      "Jenkins-Crumb":"9764baafe4a0b0755cb5cb4544fbc0742113bc537a5a4889a0c97b574a648a5e"
     }
   },
   "events": [
