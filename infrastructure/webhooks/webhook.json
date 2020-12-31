@@ -7,7 +7,7 @@
   },
   "request": {
     "method": "POST",
-    "url": "http://17115c52f9f4.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
+    "url": "http://034741e6f9ab.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}",
     "headers": {
       "Accept": "application/json",
       "Jenkins-Crumb":"9764baafe4a0b0755cb5cb4544fbc0742113bc537a5a4889a0c97b574a648a5e"
