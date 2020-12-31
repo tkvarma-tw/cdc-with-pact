@@ -42,7 +42,7 @@ pipeline {
             echo "JSON Object: $json"
             def crumb = json.crumb
             echo "Jenkins_Crumb = $crumb"
-            env.JENKINS_CRUMB = $crumb
+            env.JENKINS_CRUMB = crumb
           }
         }
       }
