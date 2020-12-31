@@ -50,8 +50,9 @@ pipeline {
           echo "Response: $RESPONSE"
           def json = new JsonSlurperClassic().parseText(RESPONSE)
           echo "JSON Object: $json"
-          def href = json['_links']['pb:webhooks'][0].href
-          if(href==null){
+          try{
+            def href = json['_links']['pb:webhooks'][0].href
+          }catch(NullPointerException e){
             echo "Please create new Webhook"
             env.CREATE_WEBHOOK = "true"
           }
