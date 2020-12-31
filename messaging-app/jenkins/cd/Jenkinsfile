@@ -81,7 +81,8 @@ pipeline {
       }
     }
 
-    stage('Publish Pacts') {
+    stage('Publish Pacts for newly created webhook') {
+      when {environment name: 'CREATE_WEBHOOK', value: 'true' }
       steps {
         dir('messaging-app') {
 
