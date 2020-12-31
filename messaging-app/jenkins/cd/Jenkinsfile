@@ -28,7 +28,7 @@ pipeline {
           final String url = "http://17115c52f9f4.ngrok.io/crumbIssuer/api/json"
 
           final def (String response, int code) =
-          sh(script: "curl -s -w '\\n%{response_code}' $url", returnStdout: true)
+          sh(script: "curl -s -w '\n%{response_code}' $url", returnStdout: true)
                   .trim()
 
           echo "HTTP response status code: $code"
