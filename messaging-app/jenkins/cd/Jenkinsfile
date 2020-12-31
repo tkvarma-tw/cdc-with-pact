@@ -62,13 +62,14 @@ pipeline {
 //    stage('Publish Pacts') {
 //      steps {
 //        dir('messaging-app') {
+
 //          sh '../mvnw pact:publish -Dpact.consumer.version=${GIT_COMMIT} -Dpact.tag=${BRANCH_NAME}'
 //        }
 //      }
 //    }
 //
     stage('Create a webhook and add the Jenkins Crumb in the webhook') {
-      when {expression ${CREATE_WEBHOOK}}
+      when {environment name: 'CREATE_WEBHOOK', value: true }
       steps {
         sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.61.1/pact-1.61.1-linux-x86_64.tar.gz'
         sh 'tar xzf pact-1.61.1-linux-x86_64.tar.gz'
