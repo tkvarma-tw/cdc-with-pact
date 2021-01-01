@@ -18,15 +18,6 @@ pipeline {
       }
     }
 
-    stage('Publish Pacts') {
-      steps {
-        dir('messaging-app') {
-
-          sh '../mvnw pact:publish -Dpact.consumer.version=${GIT_COMMIT} -Dpact.tag=${BRANCH_NAME}'
-        }
-      }
-    }
-
     stage("Get Jenkins crumb from curl command") {
       steps {
         script {
@@ -60,12 +51,30 @@ pipeline {
           def json = new JsonSlurperClassic().parseText(RESPONSE)
           echo "JSON Object: $json"
           env.CREATE_WEBHOOK = "false"
-          try{
-            def href = json['_links']['pb:webhooks'][0].href
-          }catch(NullPointerException e){
-            echo "Please create new Webhook"
+          env.PUBLISH_PACT = "false"
+          if(json.properties.keySet().contains("error")){
+            echo "Please publish the pact first"
+            env.PUBLISH_PACT = "true"
             env.CREATE_WEBHOOK = "true"
+          }else{
+            try{
+              def href = json['_links']['pb:webhooks'][0].href
+            }catch(NullPointerException e){
+              echo "Please create new Webhook"
+              env.CREATE_WEBHOOK = "true"
+            }
           }
+
+        }
+      }
+    }
+
+    stage('Publish Pacts for first time') {
+      when {environment name: 'PUBLISH_PACT', value: 'true' }
+      steps {
+        dir('messaging-app') {
+
+          sh '../mvnw pact:publish -Dpact.consumer.version=${GIT_COMMIT} -Dpact.tag=${BRANCH_NAME}'
         }
       }
     }
@@ -81,8 +90,7 @@ pipeline {
       }
     }
 
-    stage('Publish Pacts for newly created webhook') {
-      when {environment name: 'CREATE_WEBHOOK', value: 'true' }
+    stage('Publish Pacts') {
       steps {
         dir('messaging-app') {
 
