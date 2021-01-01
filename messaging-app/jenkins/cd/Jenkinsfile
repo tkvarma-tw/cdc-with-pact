@@ -112,7 +112,7 @@ pipeline {
             }
           }
           dir('pact/bin') {
-            sh "./pact-broker can-i-deploy --retry-while-unknown=12 --retry-interval=20 -a messaging-app -e ${GIT_COMMIT} -a user-service -e ${GIT_COMMIT} -b http://pact_broker"
+            sh "./pact-broker can-i-deploy --retry-while-unknown=12 --retry-interval=20 -a messaging-app -e ${GIT_COMMIT} -b http://pact_broker"
           }
         }
       }
