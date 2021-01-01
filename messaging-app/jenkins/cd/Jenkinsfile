@@ -99,7 +99,7 @@ pipeline {
       }
     }
 
-      stage('Check Pact Verifications') {
+      stage('Check for existing pact-cli folder and verify the pact') {
         steps {
           script{
             res = sh(script: "test -d pact && echo '1' || echo '0' ", returnStdout: true).trim()
