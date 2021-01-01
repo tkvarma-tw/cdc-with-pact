@@ -85,7 +85,7 @@ pipeline {
         sh 'curl -LO https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.61.1/pact-1.61.1-linux-x86_64.tar.gz'
         sh 'tar xzf pact-1.61.1-linux-x86_64.tar.gz'
         dir('pact/bin') {
-          sh "./pact-broker create-webhook 'http://c3e655d9ed99.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=master' --request=POST --header='Accept: application/json' 'Jenkins-Crumb:${JENKINS_CRUMB}' --broker-base-url='http://pact_broker' --consumer=messaging-app --provider=user-service --contract_content_changed --verbose"
+          sh "./pact-broker create-webhook 'http://c3e655d9ed99.ngrok.io/job/user-service-build-and-deploy/buildWithParameters?pactConsumerTags=${pactbroker.consumerVersionTags}' --request=POST --header='Accept: application/json' 'Jenkins-Crumb:${JENKINS_CRUMB}' --broker-base-url='http://pact_broker' --consumer=messaging-app --provider=user-service --contract_content_changed --verbose"
         }
       }
     }
