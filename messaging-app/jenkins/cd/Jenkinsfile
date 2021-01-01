@@ -52,7 +52,7 @@ pipeline {
           echo "JSON Object: $json"
           env.CREATE_WEBHOOK = "false"
           env.PUBLISH_PACT = "false"
-          if(json.collect().contains("error")){
+          if(json.collect()[0].properties.containsValue("error")){
             echo "Please publish the pact first"
             env.PUBLISH_PACT = "true"
             env.CREATE_WEBHOOK = "true"
